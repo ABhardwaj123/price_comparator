@@ -1,4 +1,4 @@
-#this seed script is some manual insertion of starting data into database.
+#this seed script is some manual insertion of starting data into database. good to have some initial data to work on
 #run it once to populate the tables
 
 from database import SessionLocal
