@@ -3,6 +3,10 @@ import asyncio
 import tempfile
 import os
 
+#this basically saves cookies
+#first time we have to enter the locations manually. second time it fetches automatically
+#this is basically creating that path to save the cookie
+#tempfile.gettempdir() — returns system's temporary folder path
 user_data_dir = os.path.join(tempfile.gettempdir(), "zepto_playwright_profile")
 
 async def scrape_zepto(product_name):
@@ -12,8 +16,10 @@ async def scrape_zepto(product_name):
     async with async_playwright() as p:
         
         browser = await p.chromium.launch_persistent_context(
+            #tells where to store data
             user_data_dir=user_data_dir,
             headless=False,
+            #disables chrome's sandbox security feature
             args=["--no-sandbox"]
         )
 
@@ -25,9 +31,10 @@ async def scrape_zepto(product_name):
         address_check = await page.query_selector('h3[data-testid="user-address"]')
         address_text = await address_check.inner_text() if address_check else ""
 
+        #if location has not been selected or it is sempty
         if "Select Location" in address_text or not address_text:
-            print("⚠️  Please set your location in the browser window, then press Enter here...")
-            input()  # ← script pauses here, browser stays open
+            print("Please set your location in the browser window, then press Enter in terminal")
+            input()  
 
         await page.goto(zepto_url)
         await page.wait_for_timeout(5000)
@@ -39,9 +46,6 @@ async def scrape_zepto(product_name):
 
         results = []
 
-        # h3 with data-testid="user-address"
-        address_el = await page.query_selector('h3[data-testid="user-address"]')
-        address = await address_el.inner_text() if address_el else "N/A"
 
         for card in cards:
 
