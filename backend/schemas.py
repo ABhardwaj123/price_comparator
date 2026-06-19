@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from datetime import datetime
 
 
+#product identification
 class ProductOut(BaseModel):
     id : int
     name : str
@@ -14,6 +15,7 @@ class ProductOut(BaseModel):
         from_attributes = True
 
 
+#for one product there are more than one platform so hence seperate table
 class PriceOut(BaseModel):
     platform_name : str
     price : float
