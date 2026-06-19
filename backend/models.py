@@ -16,6 +16,7 @@ class Platform(Base):
     name = Column(String, nullable=False)
 
 
+#this table connects product to a platform
 class ProductPlatform(Base):
     __tablename__ = "product_platform"
     id = Column(Integer, primary_key=True, index=True)
@@ -24,6 +25,11 @@ class ProductPlatform(Base):
     product_url = Column(String)
 
 
+#this price table stores various prices of same product on same platform
+#this table is made to add the feature of showing the user the trend analysis
+#product_platform_id is the attribute that helps us to identify a particular combination in productplatform table
+#ex -> in product platform we have 1. {nutella , 1(blinkit) , url}. It can have many prices
+#so in price table we will have product_platform_id = 1 and its various prices
 class Price(Base):
     __tablename__ = "prices"
     id = Column(Integer, primary_key=True, index=True)
