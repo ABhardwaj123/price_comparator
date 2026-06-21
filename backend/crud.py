@@ -23,5 +23,11 @@ def save_prices(db , product_platform_id , scraped_results):
 
 #this function gives the last recorded price of object 
 def get_latest_price(db , product_platform_id):
-
+    #returns a complete price object
     return db.query(Price).filter(Price.product_platform_id == product_platform_id).order_by(Price.scraped_at.desc()).first()
+
+
+
+#this is for trend analysis
+def get_price_history(db , product_platform_id):
+    return db.query(Price).filter(Price.product_platform_id==product_platform_id).order_by(Price.scraped_at.asc()).all()
