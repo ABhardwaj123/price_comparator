@@ -24,3 +24,27 @@ class PriceOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+#these two schemas are for our representation of price history
+
+
+#saves prices and its saving time
+class PricePointOut(BaseModel):
+    price: float
+    scraped_at: datetime
+
+    class Config:
+        from_attributes = True
+
+    
+
+#this get the platform name and prices history
+class PriceHistoryOut(BaseModel):
+    platform_name: str
+    prices: list[PricePointOut]
+
+    class Config:
+        from_attributes = True
+
+
